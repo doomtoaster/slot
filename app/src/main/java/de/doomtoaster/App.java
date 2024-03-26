@@ -23,7 +23,7 @@ public static boolean gewonnen = false;
         public App(){
                 super();
                 setTitle("My Gui");
-                setSize(400, 400);
+                setSize(900, 1000);
                 add(leiter);
                 setVisible(true);
                 setDefaultCloseOperation(EXIT_ON_CLOSE);
