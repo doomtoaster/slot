@@ -1,29 +1,52 @@
 package de.doomtoaster;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.GridLayout;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-public class Leiter extends JPanel{
-	private int[] werte = {0,15,30,60,120,240,300,400,800,1200,2000,3200,5200,8400,14000};
+public class Leiter extends JPanel implements Runnable{
+	private int[] werte = {14000,8400,5200,3200,2000,1200,800,400,300,240,120,60,30,15,0};
+	private Thread t;
+	private int pos = 4;
+	ArrayList<Sprosse> sprossen = new ArrayList<>();
 	public Leiter() {
-		super();
-		Sprosse testsprosse = new Sprosse(999);
-		setLayout(new GridLayout(1,werte.length));
+		super();		
+		setLayout(new GridLayout(werte.length,0));
 		setSize(100,100);
 		assemble();
-		setBackground(Color.pink);	
-		add(testsprosse);	
-		setVisible(true);	
+		setBackground(Color.black);	
+		start();
+		setVisible(true);
 	}
 	public void assemble(){
 
 		for (int i : werte) {
-			this.add(new Sprosse(i));
+			Sprosse sprosse = new Sprosse(i);
+			this.add(sprosse);	
+			sprossen.add(sprosse);
 		}
 	}
-	
+	public void start () {
+		System.out.println("Starting " +  "leiter");
+		if (t == null) {
+			t = new Thread (this, "leiter");
+			t.start ();
+		}
+	}
+	public void run(){
+		for (Sprosse var : sprossen) {
+			System.out.println(var.getName());
+		}	
+	}
+	public ArrayList<Sprosse> getSprossen(){
+		return sprossen;
+	}
+
 }
